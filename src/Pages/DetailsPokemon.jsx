@@ -6,27 +6,21 @@ import CanvasJSReact from '@canvasjs/react-charts';
 
 const DetailsPokemon = () => {
   const { name } = useParams();
+  const [dataPoints,setDataPoints] = useState([])
   const [Pokemon, setPokemon] = useState({});
   var CanvasJSChart = CanvasJSReact.CanvasJSChart;
   const options = {
     animationEnabled: true,
     exportEnabled: true,
-    theme: "dark2", // "light1", "dark1", "dark2"
+    theme: "light", // "light1", "dark1", "dark2"
     title:{
-      text: "Trip Expenses"
+      text: "Statistique"
     },
     data: [{
       type: "pie",
       indexLabel: "{label}: {y}%",		
       startAngle: -90,
-      dataPoints: [
-        { y: 20, label: "Airfare" },
-        { y: 24, label: "Food & Drinks" },
-        { y: 20, label: "Accomodation" },
-        { y: 14, label: "Transportation" },
-        { y: 12, label: "Activities" },
-        { y: 10, label: "Misc" }	
-      ]
+      dataPoints: dataPoints
     }]
   }
   
@@ -38,6 +32,15 @@ const DetailsPokemon = () => {
       
       const responseBiss = await PokemonServices.getAllPokemonByIdBiss (responseBis.data.types[0].type.name)
       setPokemon({ ...responseBiss.data, ...responseBis.data, ...response.data});
+      const data = [
+        {y:responseBis.data.stats[0].base_stat,label:responseBis.data.stats[0].stat.name},
+        {y:responseBis.data.stats[1].base_stat,label:responseBis.data.stats[1].stat.name},
+        {y:responseBis.data.stats[2].base_stat,label:responseBis.data.stats[2].stat.name},
+        {y:responseBis.data.stats[3].base_stat,label:responseBis.data.stats[3].stat.name},
+        {y:responseBis.data.stats[4].base_stat,label:responseBis.data.stats[4].stat.name},
+        {y:responseBis.data.stats[5].base_stat,label:responseBis.data.stats[5].stat.name}
+      ];
+      setDataPoints (data)
       
       
       
@@ -59,28 +62,19 @@ const DetailsPokemon = () => {
      {/* logo pokemon */}
       <div className="d-flex align-items-start gap-3">
 
-      <div className="d-flex flex-column align-items-center col-6">
+      <div className="d-flex flex-column align-items-start col-6">
       
-      <h1>{Pokemon.name} N°{Pokemon.id && Pokemon.id}</h1>
+      <h1 >{Pokemon.name} N°{Pokemon.id && Pokemon.id}</h1>
       
       <img className="img-poke"
         src=
           {"https://img.pokemondb.net/artwork/"+Pokemon.name+".jpg"}
            alt={"image+" + Pokemon.name}/>
-           <div>
-           <h2>Localisation </h2>
-           <p className="moutain">{Pokemon.habitat && Pokemon.habitat.name}</p>
-           </div>
+            
            <div>
            <CanvasJSChart options = {options} 
 				/* onRef={ref => this.chart = ref} */
 			/>
-           </div>
-           <div>
-           <h2>Statistique du pokemon</h2>
-       <p className="Stats">{Pokemon.stats && Pokemon.stats.map((stat)=> {
-        return stat.stat.name+" "
-       })}</p>
            </div>
       </div>
       
@@ -89,26 +83,45 @@ const DetailsPokemon = () => {
       <div className="version">{Pokemon.game_indices && Pokemon.game_indices.map((indice) => {
         return <span className={indice.version.name+" version-span"}> {indice.version.name+" "}</span>
       })}</div>
-      <h3>Infos :</h3>
-      <p>Type: {Pokemon.egg_groups && Pokemon.egg_groups.map((group) =>{
-        return group.name+" "
-    })}</p>
+      
+   
+      
       <p>Description Du POKémon :   {Pokemon.flavor_text_entries && Pokemon.flavor_text_entries[16].flavor_text}</p>
-      <p>Poids : {Pokemon.weight}</p>
-      <p>Taille : {Pokemon.height}</p>
-      <p>element pokemon : {Pokemon.types && Pokemon.types.map ((element)=>{
-        return element.type.name+" "
-      })}</p>
+      
+      <div id="para" className="d-flex justify-content-between flex-wrap gap-3">
+       <div id="pt" className="d-flex flex-column">
+       <span className="titre">Poids :</span>
+       {Pokemon.weight}
+      <span className="titre">Taille :</span>
+      {Pokemon.height}
+      </div>
+      
+      <div className="d-flex flex-column">
+      Competences : {Pokemon.abilities && Pokemon.abilities.map((competence)=> {
+        return <span className={competence.ability.name+"  competence"}>{competence.ability.name+" "}</span>
+      })}
+       </div>
+       </div>
+      <div className="element">
+      
+      
+      element pokemon : {Pokemon.types && Pokemon.types.map ((element)=>{
+        return  <span className={element.type.name+"  element-span"}>{element.type.name+" "}</span>
+      })}
+      </div>
+
       <p>faiblesse : {Pokemon.damage_relations && Pokemon.damage_relations.double_damage_from.map((damage) => {
-             return damage.name+" "
+             return <span className={damage.name+"  faiblesse-span"}> {damage.name+" "}</span>
             })}</p>
-            <p>fort contre : {Pokemon.damage_relations && Pokemon.damage_relations.double_damage_to.map((damage) => {
-             return damage.name+" "
-            })}</p>
-      <p>Competences : {Pokemon.abilities && Pokemon.abilities.map((competence)=> {
-        return competence.ability.name+" "
-      })}</p>
-       
+      
+      
+      <div className="point-fort">
+            fort contre : {Pokemon.damage_relations && Pokemon.damage_relations.double_damage_to.map((damage) => {
+             return <span className={damage.name+"  fort-span"}> {damage.name+" "}</span>
+            })}
+            </div>
+           
+ 
      
       {/* <h2>passif :</h2>
       {Pokemon.passive && (

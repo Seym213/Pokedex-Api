@@ -288,12 +288,19 @@
 }
 
 body{
-    background-color: beige;
+    background-color: rgb(255, 255, 255);
 }
 
 nav{
-    background-color: bisque;
+    background-color: rgb(82, 79, 77);
 }
+
+.titre-information{
+  display: flex;
+  justify-content: center;
+}
+
+
 
 .img-poke{
     border-radius: 15px;
@@ -301,7 +308,7 @@ nav{
 
 .moutain{
     display: flex;
-    justify-content: center;
+   
     font-size: 30px;
     color: rgb(209, 114, 190);
     margin-top: -15px;
@@ -311,6 +318,9 @@ nav{
 .Stats{
     
 }
+
+
+
 
 .titre-version{
   display: flex;
@@ -329,4 +339,59 @@ nav{
 .version-span{
    border-radius: 10px;
    padding: 3px;
+}
+
+.point-fort{
+display: flex;
+gap: 3px;
+}
+
+.fort-span{
+  border-radius:10px;
+  padding: 3px;
+}
+
+.faiblesse-span{
+  margin: 3px;
+  border-radius: 10px;
+  padding: 3px;
+ 
+}
+
+.competence{
+  margin: 3px;
+  border-radius: 10px;
+  padding: 2px;
+  background-color: #dad4fe;
+
+}
+
+
+
+.element-span{
+ border-radius: 10px;
+ padding: 3px;
+
+}
+
+.element{
+  margin-bottom: 15px;
+  display: flex;
+  gap: 5px;
+}
+
+#para{
+  background-color: #f6a1a1;
+  border-radius: 10px;
+  padding-left: 20px;
+padding-right: 20px;
+margin-bottom: 20px;
+}
+
+#pt{
+  margin-top: 10px;
+}
+
+.titre{
+  color: #696758;
 }

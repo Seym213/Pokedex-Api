@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Button, Container, Form } from "react-bootstrap";
 import PokemonCard from "../Components/PokemonCard";
-import Pokemonservices from "../Services/Pokemonservices";
+import Pokemonservices from "../Services/PokemonServices";
 import { useLocation, useParams } from "react-router-dom";
 
 const HomePage = () => {
